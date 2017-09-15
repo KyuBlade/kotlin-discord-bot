@@ -3,10 +3,8 @@ package com.omega.discord.bot.command.impl.music
 import com.omega.discord.bot.command.Command
 import com.omega.discord.bot.permission.Permission
 import com.omega.discord.bot.util.MessageSender
-import sx.blah.discord.handle.obj.IChannel
-import sx.blah.discord.handle.obj.IMessage
-import sx.blah.discord.handle.obj.IUser
-import sx.blah.discord.handle.obj.IVoiceChannel
+import sx.blah.discord.handle.obj.*
+import sx.blah.discord.util.PermissionUtils
 import sx.blah.discord.util.RequestBuffer
 
 
@@ -27,6 +25,7 @@ class JoinCommand : Command {
             val channelName = args.joinToString(" ")
 
             voiceChannel = message.guild.getVoiceChannelsByName(channelName).firstOrNull()
+
             if (voiceChannel == null)
                 MessageSender.sendMessage(channel, "No voice channels named $channelName found")
         } else {
@@ -37,10 +36,17 @@ class JoinCommand : Command {
         }
 
         if (voiceChannel != null) {
-            if (voiceChannel.isConnected)
-                MessageSender.sendMessage(channel, "Already connected to this channel")
-            else
-                RequestBuffer.request { voiceChannel.join() }
+
+            when {
+                !PermissionUtils.hasPermissions(voiceChannel, channel.client.ourUser, Permissions.VOICE_CONNECT) ->
+                    MessageSender.sendMessage(channel, "Can't join the voice channel ${voiceChannel.name} : Missing permission VOICE_CONNECT")
+
+                voiceChannel.isConnected ->
+                    MessageSender.sendMessage(channel, "Already connected to this channel")
+
+                else ->
+                    RequestBuffer.request { voiceChannel.join() }
+            }
         }
     }
 }
