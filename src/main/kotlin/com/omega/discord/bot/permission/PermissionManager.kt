@@ -143,12 +143,10 @@ object PermissionManager {
         val users = DatabaseFactory.userDAO.findFor(guild)
 
         permissions[event.guild] = GuildPermissions(guild, groups, users)
-        println("Added permissions or guild ${guild.name} - ${permissions.size}")
     }
 
     @EventSubscriber
     fun onGuildLeave(event: GuildLeaveEvent) {
-        println("Removing permissions for guild ${event.guild.name}")
         permissions.remove(event.guild)
     }
 }
