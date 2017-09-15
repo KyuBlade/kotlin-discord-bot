@@ -21,7 +21,7 @@ interface Command {
     fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>)
 
     fun missingArgs(author: IUser, message: IMessage) {
-        RequestBuffer.request { message.addReaction(ReactionEmoji.of(":bangbang:")) }
-        MessageSender.sendMessage(author, "One or more arguments are missing\r\n\r\n```Usage :\r\n\r\n$usage```")
+        RequestBuffer.request { message.addReaction(ReactionEmoji.of("‼")) }
+        MessageSender.sendMessage(author, "One or more arguments are missing\n\n***Usage :***\n\n$usage")
     }
 }

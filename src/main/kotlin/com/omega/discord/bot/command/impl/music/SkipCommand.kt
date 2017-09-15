@@ -65,7 +65,7 @@ class SkipCommand : Command {
                     audioManager.scheduler.skip(1)
                     MessageSender.sendMessage(channel, "Skipped track ${playingTrack.info.title} (forced)")
                 } else {
-                    RequestBuffer.request { message.addReaction(ReactionEmoji.of(":no_entry:")) }
+                    RequestBuffer.request { message.addReaction(ReactionEmoji.of("⛔")) }
                 }
             } else { // Multiple skip
 

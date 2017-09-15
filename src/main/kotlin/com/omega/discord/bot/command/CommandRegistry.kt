@@ -4,10 +4,7 @@ import com.omega.discord.bot.command.impl.HelpCommand
 import com.omega.discord.bot.command.impl.InviteCommand
 import com.omega.discord.bot.command.impl.moderation.BanCommand
 import com.omega.discord.bot.command.impl.moderation.KickCommand
-import com.omega.discord.bot.command.impl.music.JoinCommand
-import com.omega.discord.bot.command.impl.music.LeaveCommand
-import com.omega.discord.bot.command.impl.music.QueueCommand
-import com.omega.discord.bot.command.impl.music.SkipCommand
+import com.omega.discord.bot.command.impl.music.*
 import com.omega.discord.bot.command.impl.permission.PermissionsCommand
 
 
@@ -26,6 +23,7 @@ object CommandRegistry {
         register(PermissionsCommand())
         register(KickCommand())
         register(BanCommand())
+        register(SeekCommand())
     }
 
     fun register(command: Command) {

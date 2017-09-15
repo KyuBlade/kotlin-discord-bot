@@ -44,9 +44,9 @@ class QueueCommand : Command {
                 with(builder) {
                     append("**Currently playing track :** \n\n")
                     append('\t').append(trackInfo.title).append('\n')
-                    append("\t(${StringUtils.formatDuration(playingTrack.position)}/${StringUtils.formatDuration(playingTrack.duration)}) [")
+                    append("\t(${StringUtils.formatDuration(playingTrack.position)}/${StringUtils.formatDuration(playingTrack.duration)}) ")
                     append(StringUtils.getTrackAsciiProgressBar(playingTrack.position, playingTrack.duration))
-                    append("]\n\n")
+                    append("\n\n")
                 }
             }
 
