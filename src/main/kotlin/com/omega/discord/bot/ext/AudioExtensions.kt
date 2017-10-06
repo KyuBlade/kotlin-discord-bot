@@ -1,6 +1,6 @@
 package com.omega.discord.bot.ext
 
-import com.omega.discord.bot.NotSeekableException
+import com.omega.discord.bot.audio.NotSeekableException
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 
 

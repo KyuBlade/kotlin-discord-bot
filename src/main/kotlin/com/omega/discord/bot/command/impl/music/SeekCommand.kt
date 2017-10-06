@@ -1,7 +1,7 @@
 package com.omega.discord.bot.command.impl.music
 
-import com.omega.discord.bot.NotSeekableException
 import com.omega.discord.bot.audio.AudioPlayerManager
+import com.omega.discord.bot.audio.NotSeekableException
 import com.omega.discord.bot.command.Command
 import com.omega.discord.bot.ext.StringUtils
 import com.omega.discord.bot.ext.seek
