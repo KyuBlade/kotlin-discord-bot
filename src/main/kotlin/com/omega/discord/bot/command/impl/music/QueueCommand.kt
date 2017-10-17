@@ -78,10 +78,12 @@ class QueueCommand : Command {
 
             if (firstArg.startsWith("http") || firstArg.startsWith("www.")) { // URL detected
 
+                val taskMessage = MessageSender.sendMessage(channel, "Loading ...")
+
                 audioPlayerManager.manager.loadItemOrdered(
                         audioPlayerManager,
                         firstArg,
-                        QueueUrlResultLoadHandler(audioPlayerManager, channel)
+                        QueueUrlResultLoadHandler(audioPlayerManager, taskMessage)
                 )
             } else if (firstArg.startsWith("clear")) { // Clear queue
 
@@ -89,10 +91,12 @@ class QueueCommand : Command {
                 MessageSender.sendMessage(channel, "Queue cleared")
             } else { // Keywords search
 
+                val taskMessage = MessageSender.sendMessage(channel, "Loading ...")
+
                 audioPlayerManager.manager.loadItemOrdered(
                         audioPlayerManager,
                         args.joinToString(" ", "ytsearch:"),
-                        QueueKeywordLoadHandler(audioPlayerManager, channel)
+                        QueueKeywordLoadHandler(audioPlayerManager, taskMessage)
                 )
             }
         }
