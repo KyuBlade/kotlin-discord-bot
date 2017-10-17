@@ -1,4 +1,4 @@
-package com.omega.discord.bot.command.impl
+package com.omega.discord.bot.command.impl.common
 
 import com.omega.discord.bot.BotManager
 import com.omega.discord.bot.command.Command
