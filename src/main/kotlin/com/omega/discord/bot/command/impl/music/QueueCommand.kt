@@ -23,15 +23,18 @@ class QueueCommand : Command {
     override val name: String = "queue"
     override val aliases: Array<String>? = arrayOf("q")
     override val usage: String = "**queue <url>** - Add the url track to the queue\n" +
-            "**queue <keywords>** - Search on youtube for the given keywords and add the first result to the queue"
+            "**queue <keywords>** - Search on youtube for the given keywords and add the first result to the queue\n" +
+            "**queue clear** - Clear the queue"
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_QUEUE
     override val ownerOnly: Boolean = false
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
+
         val audioPlayerManager: GuildAudioPlayerManager = AudioPlayerManager.getAudioManager(channel.guild)
 
         if (args.isEmpty()) {
+
             val tracks: List<AudioTrack> = audioPlayerManager.scheduler.getQueuedTracks(0..9)
 
             val builder = StringBuilder()
@@ -39,6 +42,7 @@ class QueueCommand : Command {
             val playingTrack: AudioTrack? = audioPlayerManager.audioPlayer.playingTrack
 
             if (playingTrack != null) {
+
                 val trackInfo = playingTrack.info
 
                 with(builder) {
@@ -55,6 +59,7 @@ class QueueCommand : Command {
             if (tracks.isEmpty()) {
                 builder.append("\tNo tracks in queue")
             } else {
+
                 for (i in 0 until tracks.size) {
                     val track: AudioTrack = tracks[i]
                     builder.append("\t[${i + 1}] > ${track.info.title}(${StringUtils.formatDuration(track.duration)})\n")
@@ -66,16 +71,24 @@ class QueueCommand : Command {
             }
 
             MessageSender.sendMessage(channel, builder.toString())
+
         } else {
+
             val firstArg = args.first()
 
             if (firstArg.startsWith("http") || firstArg.startsWith("www.")) { // URL detected
+
                 audioPlayerManager.manager.loadItemOrdered(
                         audioPlayerManager,
                         firstArg,
                         QueueUrlResultLoadHandler(audioPlayerManager, channel)
                 )
+            } else if (firstArg.startsWith("clear")) { // Clear queue
+
+                audioPlayerManager.scheduler.clear()
+                MessageSender.sendMessage(channel, "Queue cleared")
             } else { // Keywords search
+
                 audioPlayerManager.manager.loadItemOrdered(
                         audioPlayerManager,
                         args.joinToString(" ", "ytsearch:"),

@@ -61,6 +61,14 @@ class TrackScheduler(private val audioPlayer: AudioPlayer) : AudioEventAdapter()
     }
 
     /**
+     * Remove all tracks from the queue.
+     */
+    fun clear() {
+
+        queue.clear()
+    }
+
+    /**
      * @return the number of tracks in queue
      */
     fun queueSize(): Int = queue.size
