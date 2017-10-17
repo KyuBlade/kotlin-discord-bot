@@ -44,8 +44,13 @@ object MessageSender {
     class Message {
 
         var backedMessage: IMessage? = null
+            set(value) {
 
-        val delayedQueue: ArrayList<Runnable> = arrayListOf()
+                field = value
+                delayedQueue.forEach { it.run() }
+            }
+
+        private val delayedQueue: ArrayList<Runnable> = arrayListOf()
 
         fun edit(content: String) {
 
