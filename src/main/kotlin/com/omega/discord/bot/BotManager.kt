@@ -3,6 +3,7 @@ package com.omega.discord.bot
 import com.omega.discord.bot.database.DatabaseFactory
 import com.omega.discord.bot.listener.ReadyListener
 import com.omega.discord.bot.permission.PermissionManager
+import com.omega.discord.bot.property.GuildPropertyManager
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import sx.blah.discord.api.ClientBuilder
@@ -38,6 +39,9 @@ object BotManager {
 
             // Init permissions manager
             PermissionManager
+
+            // Init guild properties manager
+            GuildPropertyManager
 
             client.login()
         } catch (e: NoSuchFileException) {

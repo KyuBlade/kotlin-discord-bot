@@ -2,6 +2,7 @@ package com.omega.discord.bot.command
 
 import com.omega.discord.bot.command.impl.HelpCommand
 import com.omega.discord.bot.command.impl.InviteCommand
+import com.omega.discord.bot.command.impl.config.PrefixCommand
 import com.omega.discord.bot.command.impl.moderation.BanCommand
 import com.omega.discord.bot.command.impl.moderation.KickCommand
 import com.omega.discord.bot.command.impl.music.*
@@ -24,6 +25,7 @@ object CommandRegistry {
         register(KickCommand())
         register(BanCommand())
         register(SeekCommand())
+        register(PrefixCommand())
     }
 
     fun register(command: Command) {
