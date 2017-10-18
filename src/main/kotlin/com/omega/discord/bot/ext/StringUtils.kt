@@ -1,6 +1,7 @@
 package com.omega.discord.bot.ext
 
 import com.omega.discord.bot.BotManager
+import sx.blah.discord.handle.obj.IRole
 import sx.blah.discord.handle.obj.IUser
 
 class StringUtils {
@@ -8,6 +9,7 @@ class StringUtils {
     companion object {
 
         private val USER_MENTION_PATTERN: Regex = Regex("<@!?(\\d*)>")
+        private val ROLE_MENTION_PATTERN: Regex = Regex("<@&+(\\d*)>")
 
         /**
          * Format timestamp to a string.
@@ -104,17 +106,44 @@ class StringUtils {
         }
 
         /**
-         * Parse a discord mention user to a User object.
+         * Parse a discord user mention to a User object.
          * @param mentionStr the mention string
          * @return The user object or null if not found
          * @throws NumberFormatException if the mention string is malformed
          */
         fun parseUserMention(mentionStr: String): IUser? {
+
             val result: MatchResult? = USER_MENTION_PATTERN.find(mentionStr)
 
             return try {
                 val id: Long? = result?.groupValues?.get(1)?.toLong()
                 BotManager.client.getUserByID(id!!)
+            } catch (e: NumberFormatException) {
+                println(e)
+                null
+            }
+        }
+
+        /**
+         * @param mentionStr the string to test
+         * @return true if the string is a role mention, false otherwise
+         */
+        fun isRoleMention(mentionStr: String): Boolean =
+                mentionStr.matches(ROLE_MENTION_PATTERN)
+
+        /**
+         * Parse a discord role mention to a Role object.
+         * @param mentionStr the mention string
+         * @return The role object or null if not found
+         * @throws NumberFormatException if the mention string is malformed
+         */
+        fun parseRoleMention(mentionStr: String): IRole? {
+
+            val result: MatchResult? = ROLE_MENTION_PATTERN.find(mentionStr)
+
+            return try {
+                val id: Long? = result?.groupValues?.get(1)?.toLong()
+                BotManager.client.getRoleByID(id!!)
             } catch (e: NumberFormatException) {
                 println(e)
                 null

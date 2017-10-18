@@ -13,7 +13,8 @@ enum class Permission(val key: String) {
     COMMAND_KICK("command.kick"),
     COMMAND_BAN("command.ban"),
     COMMAND_SEEK("command.seek"),
-    COMMAND_PREFIX("command.prefix");
+    COMMAND_PREFIX("command.prefix"),
+    COMMAND_AUTOROLE("command.autorole");
 
 
     companion object {

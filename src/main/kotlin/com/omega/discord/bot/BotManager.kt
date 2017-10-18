@@ -1,5 +1,6 @@
 package com.omega.discord.bot
 
+import com.omega.discord.bot.command.CommandRegistry
 import com.omega.discord.bot.database.DatabaseFactory
 import com.omega.discord.bot.listener.ReadyListener
 import com.omega.discord.bot.permission.PermissionManager
@@ -42,6 +43,9 @@ object BotManager {
 
             // Init guild properties manager
             GuildPropertyManager
+
+            // Init command registry
+            CommandRegistry
 
             client.login()
         } catch (e: NoSuchFileException) {

@@ -2,6 +2,7 @@ package com.omega.discord.bot.command
 
 import com.omega.discord.bot.command.impl.common.HelpCommand
 import com.omega.discord.bot.command.impl.common.InviteCommand
+import com.omega.discord.bot.command.impl.config.AutoRoleCommand
 import com.omega.discord.bot.command.impl.config.PrefixCommand
 import com.omega.discord.bot.command.impl.moderation.BanCommand
 import com.omega.discord.bot.command.impl.moderation.KickCommand
@@ -26,6 +27,7 @@ object CommandRegistry {
         register(BanCommand())
         register(SeekCommand())
         register(PrefixCommand())
+        register(AutoRoleCommand())
     }
 
     fun register(command: Command) {
