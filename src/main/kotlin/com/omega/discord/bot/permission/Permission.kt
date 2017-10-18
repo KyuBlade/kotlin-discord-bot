@@ -14,7 +14,8 @@ enum class Permission(val key: String) {
     COMMAND_BAN("command.ban"),
     COMMAND_SEEK("command.seek"),
     COMMAND_PREFIX("command.prefix"),
-    COMMAND_AUTOROLE("command.autorole");
+    COMMAND_AUTOROLE("command.autorole"),
+    COMMAND_ROLL("command.roll");
 
 
     companion object {
