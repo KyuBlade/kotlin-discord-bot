@@ -33,14 +33,18 @@ class SkipCommand : Command {
 
         if (voiceChanel == null) {
             MessageSender.sendMessage(channel, "Not connected to a voice channel")
-        } else if (playingTrack == null) {
-            MessageSender.sendMessage(channel, "Not playing anything")
         } else {
             val forceSkip: Boolean = args.firstOrNull()?.equals("force", true) ?: false
 
             if (args.isEmpty()) { // Vote
 
                 if (BotManager.client.connectedVoiceChannels.contains(author.getVoiceStateForGuild(channel.guild)?.channel)) {
+
+                    if (playingTrack == null) {
+
+                        MessageSender.sendMessage(channel, "Not playing anything")
+                        return
+                    }
 
                     val trackUserData = playingTrack.userData as TrackUserData
                     val votes: MutableSet<IUser> = trackUserData.skipVotes
@@ -58,6 +62,12 @@ class SkipCommand : Command {
                 }
 
             } else if (forceSkip) { // Force
+
+                if (playingTrack == null) {
+
+                    MessageSender.sendMessage(channel, "Not playing anything")
+                    return
+                }
 
                 if (author == BotManager.applicationOwner || author == message.guild.owner ||
                         PermissionManager.hasPermission(message.guild, author, Permission.COMMAND_SKIP_FORCE)) {
