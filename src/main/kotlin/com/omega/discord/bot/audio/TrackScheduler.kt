@@ -15,18 +15,23 @@ class TrackScheduler(private val audioPlayer: AudioPlayer) : AudioEventAdapter()
     private val queue: Deque<AudioTrack> = ArrayDeque()
 
     fun queue(track: AudioTrack) {
-        if (!audioPlayer.startTrack(track, true)) {
-            queue.offer(track)
+
+        queue.offer(track)
+
+        if (audioPlayer.playingTrack == null) {
+            nextTrack()
         }
     }
 
     fun queue(tracks: List<AudioTrack>) {
+
         for (track in tracks) {
             queue(track)
         }
     }
 
     fun getQueuedTracks(range: IntRange): List<AudioTrack> {
+
         val list: MutableList<AudioTrack> = mutableListOf()
 
         val finalRange: IntRange = if (range.endInclusive > queue.size - 1)
@@ -74,6 +79,7 @@ class TrackScheduler(private val audioPlayer: AudioPlayer) : AudioEventAdapter()
     fun queueSize(): Int = queue.size
 
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
+
         if (endReason.mayStartNext) {
             nextTrack()
         }
