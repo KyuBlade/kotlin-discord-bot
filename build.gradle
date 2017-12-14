@@ -2,7 +2,7 @@ group 'com.omega'
 version '0.1.0'
 
 buildscript {
-    ext.kotlin_version = '1.1.51'
+    ext.kotlin_version = '1.2.0'
 
     repositories {
         jcenter()
