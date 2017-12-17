@@ -15,6 +15,7 @@ class GuildPermissions(val guild: IGuild, groups: List<Group> = listOf(), users:
     init {
         // First init
         if (groups.isEmpty()) {
+
             defaultGroup = Group(guild = guild, name = "default",
                     permissions = hashSetOf(
                             Permission.COMMAND_INVITE, Permission.COMMAND_SKIP, Permission.COMMAND_QUEUE
@@ -25,11 +26,12 @@ class GuildPermissions(val guild: IGuild, groups: List<Group> = listOf(), users:
 
             DatabaseFactory.groupDAO.insert(defaultGroup)
         } else {
-            groups.forEach {
-                groupMap[it.name] = it
+
+            groups.forEach { group ->
+                groupMap[group.name] = group
             }
-            users.forEach {
-                userMap[it.user] = it
+            users.forEach { user ->
+                userMap[user.user] = user
             }
 
             defaultGroup = groupMap["default"]!!

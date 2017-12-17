@@ -7,7 +7,6 @@ import com.omega.discord.bot.permission.Permission
 import com.omega.discord.bot.permission.PermissionManager
 import com.omega.discord.bot.util.MessageSender
 import sx.blah.discord.handle.obj.IChannel
-import sx.blah.discord.handle.obj.IGuild
 import sx.blah.discord.handle.obj.IMessage
 import sx.blah.discord.handle.obj.IUser
 
@@ -22,22 +21,25 @@ class HelpCommand : Command {
     override val ownerOnly: Boolean = false
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
+
         if (args.isNotEmpty()) {
+
             commandHelp(author, args[0].toLowerCase())
         } else {
-            commandHelp(channel.guild, author)
+            commandHelp(channel, author)
         }
     }
 
-    private fun commandHelp(guild: IGuild?, author: IUser) {
+    private fun commandHelp(channel: IChannel, author: IUser) {
 
         val builder = StringBuilder("Use !help <commandName> to get a command usage\n\n**Available commands :**\n```")
 
         CommandRegistry.get().forEach {
 
             if (it.permission == null ||
-                    (author == BotManager.applicationOwner || author == guild?.owner ||
-                            if (guild == null) true else PermissionManager.hasPermission(guild, author, it.permission!!))) {
+                    author == BotManager.applicationOwner ||
+                    (!channel.isPrivate && author == channel.guild.owner) ||
+                    if (channel.isPrivate) true else PermissionManager.hasPermission(channel.guild, author, it.permission!!)) {
 
                 builder.append(it.name)
 
