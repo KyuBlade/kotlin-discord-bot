@@ -20,18 +20,24 @@ object DatabaseFactory {
     private val datastore = morphia.createDatastore(MongoClient(), "kotlin_bot")
 
     init {
-        morphia.map(setOf(
-                User::class.java,
-                Group::class.java,
-                GuildProperties::class.java
-        ))
+        morphia.map(
+                setOf(
+                        User::class.java,
+                        Group::class.java,
+                        GuildProperties::class.java
+                )
+        )
 
         with(morphia.mapper.converters) {
+
             addConverter(GuildTypeConverter())
             addConverter(ChannelTypeConverter())
             addConverter(UserTypeConverter())
             addConverter(RoleTypeConverter())
         }
+
+        morphia.mapper.options.isStoreEmpties = true
+        morphia.mapper.options.isStoreNulls = true
 
         datastore.ensureIndexes()
     }
@@ -42,6 +48,7 @@ object DatabaseFactory {
     val guildPropertiesDAO: GuildPropertiesDAO = MorphiaGuildPropertiesDAO(datastore)
 
     fun close() {
+
         userDAO.clean()
         groupDAO.clean()
         guildPropertiesDAO.clean()

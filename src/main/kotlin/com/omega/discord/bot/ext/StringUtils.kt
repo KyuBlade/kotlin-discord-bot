@@ -125,6 +125,8 @@ class StringUtils {
         }
 
         /**
+         * Check if the string is a role mention
+         *
          * @param mentionStr the string to test
          * @return true if the string is a role mention, false otherwise
          */
@@ -133,6 +135,7 @@ class StringUtils {
 
         /**
          * Parse a discord role mention to a Role object.
+         *
          * @param mentionStr the mention string
          * @return The role object or null if not found
          * @throws NumberFormatException if the mention string is malformed

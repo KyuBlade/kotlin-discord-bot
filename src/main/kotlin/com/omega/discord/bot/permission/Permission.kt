@@ -15,6 +15,8 @@ enum class Permission(val key: String) {
     COMMAND_SEEK("command.seek"),
     COMMAND_PREFIX("command.prefix"),
     COMMAND_AUTOROLE("command.autorole"),
+    COMMAND_SELF_ROLE("command.role.self"),
+    COMMAND_MANAGE_SELF_ROLE("command.role.self.manage"),
     COMMAND_ROLL("command.roll");
 
 
