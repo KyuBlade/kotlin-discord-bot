@@ -59,7 +59,7 @@ object GuildPropertyManager {
 
             GuildProperty.values().forEach {
 
-                guildProperties!!.set(it, it.defaultValue)
+                guildProperties.set(it, it.defaultValue)
             }
 
             DatabaseFactory.guildPropertiesDAO.insert(guildProperties)

@@ -16,7 +16,7 @@ class MessageListener {
 
         val guild = event.guild
         val prefix = if (guild != null)
-            GuildPropertyManager.get(event.guild, GuildProperty.COMMAND_PREFIX)?.value as String
+            GuildPropertyManager.get(event.guild, GuildProperty.COMMAND_PREFIX).value as String
         else
             "!"
 

@@ -39,7 +39,7 @@ class JoinCommand : Command {
                 MessageSender.sendMessage(channel, "You are not in a voice channel")
         }
 
-        voiceChannel?.let {
+        if (voiceChannel != null) {
 
             when {
                 !PermissionUtils.hasPermissions(voiceChannel, channel.client.ourUser, Permissions.VOICE_CONNECT) ->
