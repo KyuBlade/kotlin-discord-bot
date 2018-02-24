@@ -8,11 +8,14 @@ import sx.blah.discord.handle.impl.events.ReadyEvent
 
 class ReadyListener {
 
-    val LOGGER: Logger = LoggerFactory.getLogger("ReadyListener")
+    private val logger: Logger = LoggerFactory.getLogger("ReadyListener")
 
     @EventSubscriber
     fun onReady(event: ReadyEvent) {
-        event.client.dispatcher.registerListener(MessageListener())
-        LOGGER.info("Bot ready !")
+        event.client.dispatcher.registerListeners(
+                MessageCommandListener(),
+                FunMentionListener()
+        )
+        logger.info("Bot ready !")
     }
 }

@@ -6,7 +6,7 @@ import com.omega.discord.bot.property.GuildPropertyManager
 import sx.blah.discord.api.events.EventSubscriber
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent
 
-class MessageListener {
+class MessageCommandListener {
 
     @EventSubscriber
     fun onMessage(event: MessageReceivedEvent) {
