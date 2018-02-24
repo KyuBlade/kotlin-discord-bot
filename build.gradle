@@ -35,7 +35,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile 'com.github.austinv11:Discord4j:61d68fc'
+    compile 'com.github.austinv11:Discord4j:1c72e44324'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile 'com.sedmelluq:lavaplayer:1.2.44'
 
