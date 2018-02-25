@@ -37,7 +37,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile 'com.github.austinv11:Discord4j:1c72e44324'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-    compile 'com.sedmelluq:lavaplayer:1.2.44'
+    compile 'com.sedmelluq:lavaplayer:1.2.53'
 
     compile 'org.mongodb.morphia:morphia:1.3.1'
 }
