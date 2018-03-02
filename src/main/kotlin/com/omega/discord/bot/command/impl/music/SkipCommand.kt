@@ -17,6 +17,7 @@ import sx.blah.discord.util.RequestBuffer
 
 
 class SkipCommand : Command {
+
     override val name: String = "skip"
     override val aliases: Array<String>? = null
     override val usage: String = "**skip** - Skip the playing track\n" +
@@ -27,13 +28,16 @@ class SkipCommand : Command {
     override val ownerOnly: Boolean = false
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
+
         val audioManager = AudioPlayerManager.getAudioManager(channel.guild)
         val voiceChanel: IVoiceChannel? = channel.guild.connectedVoiceChannel
         val playingTrack: AudioTrack? = audioManager.audioPlayer.playingTrack
 
         if (voiceChanel == null) {
+
             MessageSender.sendMessage(channel, "Not connected to a voice channel")
         } else {
+
             val forceSkip: Boolean = args.firstOrNull()?.equals("force", true) ?: false
 
             if (args.isEmpty()) { // Vote
@@ -55,6 +59,7 @@ class SkipCommand : Command {
                     val currentVotes: Int = votes.size
 
                     if (currentVotes >= neededCount) {
+
                         audioManager.scheduler.skip(1)
                         MessageSender.sendMessage(channel, "Skipped track ${playingTrack.info.title}")
                     } else
@@ -75,17 +80,26 @@ class SkipCommand : Command {
                     audioManager.scheduler.skip(1)
                     MessageSender.sendMessage(channel, "Skipped track ${playingTrack.info.title} (forced)")
                 } else {
+
                     RequestBuffer.request { message.addReaction(ReactionEmoji.of("⛔")) }
                 }
             } else { // Multiple skip
+
+                if (playingTrack == null) {
+
+                    MessageSender.sendMessage(channel, "Not playing anything")
+                    return
+                }
 
                 try {
 
                     val skipCount = args[0].toInt()
                     val skippedCount = audioManager.scheduler.skip(skipCount)
+
                     MessageSender.sendMessage(channel, "Skipped $skippedCount tracks")
 
                 } catch (e: NumberFormatException) {
+
                     MessageSender.sendMessage(channel, "The count parameter '${args[0]}' is not a number")
                 }
             }

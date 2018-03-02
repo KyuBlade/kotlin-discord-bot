@@ -48,21 +48,22 @@ class TrackScheduler(private val audioPlayer: AudioPlayer) : AudioEventAdapter()
     private fun nextTrack() = audioPlayer.startTrack(queue.poll(), false)
 
     /**
-     * Skip the currently playing track and remove count - 1, or count - 2 if no track is playing, from the queue
+     * Skip the currently playing track and remove count - 1 tracks from the queue
      * @return the number of tracks removed from the queue
      */
     fun skip(count: Int): Int {
 
         val currentTrack = audioPlayer.playingTrack
-        val minusCount = if (currentTrack != null) 0 else 1
+        val minusCount = if (currentTrack != null) 1 else 0
 
         val queueSize = queue.size
         val finalCount = Math.min(queueSize, count - minusCount)
 
         queue.removeAll(getQueuedTracks(0 until finalCount))
+
         nextTrack()
 
-        return finalCount
+        return finalCount + minusCount
     }
 
     /**
