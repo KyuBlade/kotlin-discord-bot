@@ -1,5 +1,6 @@
 package com.omega.discord.bot.command
 
+import com.omega.discord.bot.BotManager
 import com.omega.discord.bot.permission.Permission
 import com.omega.discord.bot.util.MessageSender
 import sx.blah.discord.handle.impl.obj.ReactionEmoji
@@ -30,7 +31,7 @@ abstract class Command {
         val newCommandTimestamp = System.currentTimeMillis() / 1000
 
         // Execute only time since last command in higher than the global cooldown
-        if(newCommandTimestamp - lastCommandTimestamp >= globalCooldown /*|| BotManager.applicationOwner == author*/) {
+        if(newCommandTimestamp - lastCommandTimestamp >= globalCooldown || BotManager.applicationOwner == author || author == channel.guild.owner) {
 
             lastCommandTimestamp = newCommandTimestamp
             execute(author, channel, message, args)
