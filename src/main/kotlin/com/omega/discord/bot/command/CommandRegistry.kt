@@ -9,6 +9,7 @@ import com.omega.discord.bot.command.impl.config.ManageSelfRoleCommand
 import com.omega.discord.bot.command.impl.config.PrefixCommand
 import com.omega.discord.bot.command.impl.moderation.BanCommand
 import com.omega.discord.bot.command.impl.moderation.KickCommand
+import com.omega.discord.bot.command.impl.moderation.PurgeCommand
 import com.omega.discord.bot.command.impl.music.*
 import com.omega.discord.bot.command.impl.permission.PermissionsCommand
 
@@ -28,6 +29,7 @@ object CommandRegistry {
         register(PermissionsCommand())
         register(KickCommand())
         register(BanCommand())
+        register(PurgeCommand())
         register(SeekCommand())
         register(PrefixCommand())
         register(AutoRoleCommand())

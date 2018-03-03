@@ -10,7 +10,7 @@ import sx.blah.discord.handle.obj.*
 import java.util.stream.Collectors
 
 
-class ManageSelfRoleCommand : Command {
+class ManageSelfRoleCommand : Command() {
 
     override val name: String = "manageSelfRole"
     override val aliases: Array<String>? = arrayOf("msr")
@@ -19,6 +19,7 @@ class ManageSelfRoleCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_MANAGE_SELF_ROLE
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 0
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
 

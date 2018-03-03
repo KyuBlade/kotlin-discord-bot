@@ -8,7 +8,7 @@ import sx.blah.discord.util.PermissionUtils
 import sx.blah.discord.util.RequestBuffer
 
 
-class JoinCommand : Command {
+class JoinCommand : Command() {
 
     override val name: String = "join"
     override val aliases: Array<String>? = arrayOf("j")
@@ -17,6 +17,7 @@ class JoinCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission = Permission.COMMAND_JOIN
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 15
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
 

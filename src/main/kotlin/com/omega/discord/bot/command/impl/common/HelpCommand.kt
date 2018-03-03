@@ -11,7 +11,7 @@ import sx.blah.discord.handle.obj.IMessage
 import sx.blah.discord.handle.obj.IUser
 
 
-class HelpCommand : Command {
+class HelpCommand : Command() {
 
     override val name: String = "help"
     override val aliases: Array<String>? = arrayOf("h")
@@ -19,6 +19,7 @@ class HelpCommand : Command {
     override val permission: Permission? = null
     override val allowPrivate: Boolean = true
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 0
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
 

@@ -12,6 +12,7 @@ enum class Permission(val key: String) {
     COMMAND_PERMISSIONS("command.permissions"),
     COMMAND_KICK("command.kick"),
     COMMAND_BAN("command.ban"),
+    COMMAND_PURGE("command.purge"),
     COMMAND_SEEK("command.seek"),
     COMMAND_PREFIX("command.prefix"),
     COMMAND_AUTOROLE("command.autorole"),

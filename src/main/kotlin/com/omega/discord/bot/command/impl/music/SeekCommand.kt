@@ -13,7 +13,7 @@ import sx.blah.discord.handle.obj.IUser
 import sx.blah.discord.util.EmbedBuilder
 
 
-class SeekCommand : Command {
+class SeekCommand : Command() {
 
     override val name: String = "seek"
     override val aliases: Array<String>? = null
@@ -21,6 +21,7 @@ class SeekCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_SEEK
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 15
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
 

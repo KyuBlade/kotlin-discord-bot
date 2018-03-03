@@ -16,28 +16,36 @@ object CommandHandler {
     private val LOGGER: Logger = LoggerFactory.getLogger(CommandHandler.javaClass)
 
     fun handle(commandName: String, message: IMessage) {
+
         val command: Command? = CommandRegistry.get(commandName)
         if (command == null) {
+
             LOGGER.info("Command $commandName not found")
             RequestBuffer.request { message.addReaction(ReactionEmoji.of("⁉")) }
         } else {
+
             val permission: Permission? = command.permission
             if (permission == null || message.author == BotManager.applicationOwner ||
                     PermissionManager.getPermissions(message.guild, message.author).has(permission)) {
 
                 if (!command.allowPrivate && message.channel.isPrivate) {
+
                     RequestBuffer.request { message.addReaction(ReactionEmoji.of("\uD83D\uDEB7")) }
                 } else {
+
                     try {
-                        command.execute(message.author, message.channel, message,
+                        command.executeInternal(message.author, message.channel, message,
                                 message.content.split(' ').drop(1))
+
                     } catch (e: Exception) {
+
                         LOGGER.warn("Command execution failed", e)
                         RequestBuffer.request { message.addReaction(ReactionEmoji.of("\uD83C\uDD98")) }
                     }
                 }
 
             } else {// No permission
+
                 LOGGER.info("User ${message.author.getNameAndDiscriminator()} doesn't have permission ${command.permission} to run command $commandName")
                 RequestBuffer.request { message.addReaction(ReactionEmoji.of("⛔")) }
             }

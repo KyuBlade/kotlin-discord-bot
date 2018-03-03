@@ -11,7 +11,7 @@ import sx.blah.discord.handle.obj.IMessage
 import sx.blah.discord.handle.obj.IUser
 
 
-class PrefixCommand : Command {
+class PrefixCommand : Command() {
 
     override val name: String = "prefix"
     override val aliases: Array<String>? = null
@@ -19,6 +19,7 @@ class PrefixCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_PREFIX
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 0
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
 

@@ -10,7 +10,7 @@ import sx.blah.discord.handle.obj.IVoiceChannel
 import sx.blah.discord.util.RequestBuffer
 
 
-class LeaveCommand : Command {
+class LeaveCommand : Command() {
 
     override val name: String = "leave"
     override val aliases: Array<String>? = arrayOf("l")
@@ -18,6 +18,7 @@ class LeaveCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_LEAVE
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 15
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
         RequestBuffer.request {

@@ -16,7 +16,7 @@ import sx.blah.discord.util.PermissionUtils
 import sx.blah.discord.util.RequestBuffer
 
 
-class AutoRoleCommand : Command {
+class AutoRoleCommand : Command() {
 
     init {
         BotManager.client.dispatcher.registerListener(this)
@@ -30,6 +30,7 @@ class AutoRoleCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_AUTOROLE
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 0
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
 

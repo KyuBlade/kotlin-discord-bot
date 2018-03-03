@@ -13,7 +13,7 @@ import java.util.stream.Collectors
 import kotlin.streams.toList
 
 
-class SelfRoleCommand : Command {
+class SelfRoleCommand : Command() {
 
     override val name: String = "selfrole"
     override val aliases: Array<String>? = arrayOf("sr")
@@ -24,6 +24,7 @@ class SelfRoleCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_SELF_ROLE
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 0
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
 

@@ -16,7 +16,7 @@ import sx.blah.discord.handle.obj.IVoiceChannel
 import sx.blah.discord.util.RequestBuffer
 
 
-class SkipCommand : Command {
+class SkipCommand : Command() {
 
     override val name: String = "skip"
     override val aliases: Array<String>? = null
@@ -26,6 +26,7 @@ class SkipCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_SKIP
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 15
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
 

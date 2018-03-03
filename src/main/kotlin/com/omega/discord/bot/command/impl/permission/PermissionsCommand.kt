@@ -11,7 +11,7 @@ import sx.blah.discord.handle.obj.IMessage
 import sx.blah.discord.handle.obj.IUser
 
 
-class PermissionsCommand : Command {
+class PermissionsCommand : Command() {
 
     override val name: String = "permissions"
     override val aliases: Array<String>? = arrayOf("perms")
@@ -26,6 +26,7 @@ class PermissionsCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_PERMISSIONS
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 0
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
         if (args.isNotEmpty()) {

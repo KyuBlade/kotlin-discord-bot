@@ -16,7 +16,7 @@ import sx.blah.discord.handle.obj.IMessage
 import sx.blah.discord.handle.obj.IUser
 
 
-class QueueCommand : Command {
+class QueueCommand : Command() {
 
     private val LOGGER: Logger = LoggerFactory.getLogger(QueueCommand::class.java)
 
@@ -28,6 +28,7 @@ class QueueCommand : Command {
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_QUEUE
     override val ownerOnly: Boolean = false
+    override val globalCooldown: Long = 5
 
     override fun execute(author: IUser, channel: IChannel, message: IMessage, args: List<String>) {
 
