@@ -152,6 +152,47 @@ class StringUtils {
                 null
             }
         }
+
+        fun sanitizeMentions(data: String): String {
+
+            var sanitizedData:String = data
+
+            USER_MENTION_PATTERN.findAll(data).forEach {
+
+                val user: IUser? = try {
+
+                    it.groups[1]?.value?.toLong()?.let {
+
+                        BotManager.client.getUserByID(it)
+                    }
+                } catch (e: NumberFormatException) {
+
+                    null
+                }
+
+                val userName: String = user?.getNameAndDiscriminator() ?: "unknown user"
+                sanitizedData = sanitizedData.replaceRange(it.range, userName)
+            }
+
+            ROLE_MENTION_PATTERN.findAll(data).forEach {
+
+                val role: IRole? = try {
+
+                    it.groups[1]?.value?.toLong()?.let {
+
+                        BotManager.client.getRoleByID(it)
+                    }
+                } catch (e: NumberFormatException) {
+
+                    null
+                }
+
+                val roleName: String = role?.name ?: "unknown role"
+                sanitizedData = sanitizedData.replaceRange(it.range, roleName)
+            }
+
+            return sanitizedData
+        }
     }
 }
 

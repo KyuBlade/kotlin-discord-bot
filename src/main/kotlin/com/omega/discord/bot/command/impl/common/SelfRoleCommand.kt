@@ -1,6 +1,7 @@
 package com.omega.discord.bot.command.impl.common
 
 import com.omega.discord.bot.command.Command
+import com.omega.discord.bot.ext.StringUtils
 import com.omega.discord.bot.permission.Permission
 import com.omega.discord.bot.property.GuildProperty
 import com.omega.discord.bot.property.GuildPropertyManager
@@ -37,7 +38,7 @@ class SelfRoleCommand : Command {
             "list" -> {
                 if (args.size > 1) {
 
-                    val roleName = args.drop(1).joinToString(" ")
+                    val roleName = StringUtils.sanitizeMentions(args.drop(1).joinToString(" "))
                     val role: IRole? = channel.guild.roles.firstOrNull { it.name.equals(roleName, true) }
 
                     if(role == null)
@@ -56,7 +57,7 @@ class SelfRoleCommand : Command {
                     return
                 }
 
-                val roleName = args.drop(1).joinToString(" ")
+                val roleName = StringUtils.sanitizeMentions(args.drop(1).joinToString(" "))
                 val result: List<IRole> = channel.guild.roles.stream().filter { role -> role.name.equals(roleName, true) }
                         .collect(Collectors.toList())
 
