@@ -42,40 +42,44 @@ class SkipCommand : Command {
 
             if (args.isEmpty()) { // Vote
 
-                if (BotManager.client.connectedVoiceChannels.contains(author.getVoiceStateForGuild(channel.guild)?.channel)) {
+                if (author == BotManager.applicationOwner || author == message.guild.owner ||
+                        PermissionManager.hasPermission(message.guild, author, Permission.COMMAND_SKIP)) {
+
+                    if (BotManager.client.connectedVoiceChannels.contains(author.getVoiceStateForGuild(channel.guild)?.channel)) {
+
+                        if (playingTrack == null) {
+
+                            MessageSender.sendMessage(channel, "Not playing anything")
+                            return
+                        }
+
+                        val trackUserData = playingTrack.userData as TrackUserData
+                        val votes: MutableSet<IUser> = trackUserData.skipVotes
+
+                        votes.add(author)
+
+                        val neededCount: Int = Math.ceil(voiceChanel.connectedUsers.size * 0.5).toInt()
+                        val currentVotes: Int = votes.size
+
+                        if (currentVotes >= neededCount) {
+
+                            audioManager.scheduler.skip(1)
+                            MessageSender.sendMessage(channel, "Skipped track ${playingTrack.info.title}")
+                        } else
+                            MessageSender.sendMessage(channel, "Vote to skip : $currentVotes / $neededCount")
+                    }
+                }
+
+            } else if (forceSkip) { // Force
+
+                if (author == BotManager.applicationOwner || author == message.guild.owner ||
+                        PermissionManager.hasPermission(message.guild, author, Permission.COMMAND_SKIP_FORCE)) {
 
                     if (playingTrack == null) {
 
                         MessageSender.sendMessage(channel, "Not playing anything")
                         return
                     }
-
-                    val trackUserData = playingTrack.userData as TrackUserData
-                    val votes: MutableSet<IUser> = trackUserData.skipVotes
-
-                    votes.add(author)
-
-                    val neededCount: Int = Math.ceil(voiceChanel.connectedUsers.size * 0.5).toInt()
-                    val currentVotes: Int = votes.size
-
-                    if (currentVotes >= neededCount) {
-
-                        audioManager.scheduler.skip(1)
-                        MessageSender.sendMessage(channel, "Skipped track ${playingTrack.info.title}")
-                    } else
-                        MessageSender.sendMessage(channel, "Vote to skip : $currentVotes / $neededCount")
-                }
-
-            } else if (forceSkip) { // Force
-
-                if (playingTrack == null) {
-
-                    MessageSender.sendMessage(channel, "Not playing anything")
-                    return
-                }
-
-                if (author == BotManager.applicationOwner || author == message.guild.owner ||
-                        PermissionManager.hasPermission(message.guild, author, Permission.COMMAND_SKIP_FORCE)) {
 
                     audioManager.scheduler.skip(1)
                     MessageSender.sendMessage(channel, "Skipped track ${playingTrack.info.title} (forced)")
@@ -85,22 +89,30 @@ class SkipCommand : Command {
                 }
             } else { // Multiple skip
 
-                if (playingTrack == null) {
+                if (author == BotManager.applicationOwner || author == message.guild.owner ||
+                        PermissionManager.hasPermission(message.guild, author, Permission.COMMAND_SKIP_MULTIPLE)) {
 
-                    MessageSender.sendMessage(channel, "Not playing anything")
-                    return
-                }
+                    if (playingTrack == null) {
 
-                try {
+                        MessageSender.sendMessage(channel, "Not playing anything")
+                        return
+                    }
 
-                    val skipCount = args[0].toInt()
-                    val skippedCount = audioManager.scheduler.skip(skipCount)
+                    try {
 
-                    MessageSender.sendMessage(channel, "Skipped $skippedCount tracks")
+                        val skipCount = args[0].toInt()
+                        val skippedCount = audioManager.scheduler.skip(skipCount)
 
-                } catch (e: NumberFormatException) {
+                        MessageSender.sendMessage(channel, "Skipped $skippedCount tracks")
 
-                    MessageSender.sendMessage(channel, "The count parameter '${args[0]}' is not a number")
+                    } catch (e: NumberFormatException) {
+
+                        MessageSender.sendMessage(channel, "The count parameter '${args[0]}' is not a number")
+                    }
+
+                } else {
+
+                    RequestBuffer.request { message.addReaction(ReactionEmoji.of("⛔")) }
                 }
             }
         }
