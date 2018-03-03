@@ -17,6 +17,7 @@ class SelfRoleCommand : Command {
     override val name: String = "selfrole"
     override val aliases: Array<String>? = arrayOf("sr")
     override val usage: String = "**selfrole list** - Get the list of available roles\n" +
+            "**selfrole list <role_name>** - Get the users having the provided role" +
             "**selfrole add <role_name>** - Add the role to yourself\n" +
             "**selfrole remove <role_name>** - Remove the role from yourself"
     override val allowPrivate: Boolean = false
@@ -33,7 +34,20 @@ class SelfRoleCommand : Command {
 
         when (args[0]) {
 
-            "list" -> listRoles(channel)
+            "list" -> {
+                if (args.size > 1) {
+
+                    val roleName = args.drop(1).joinToString(" ")
+                    val role: IRole? = channel.guild.roles.firstOrNull { it.name.equals(roleName, true) }
+
+                    if(role == null)
+                        MessageSender.sendMessage(channel, "Role $roleName not found")
+                    else
+                        listUsers(channel, role)
+
+                } else
+                    listRoles(channel)
+            }
             else -> {
 
                 if (args.size < 2) {
@@ -56,7 +70,7 @@ class SelfRoleCommand : Command {
                         val availableRoles: MutableSet<IRole> = wrapper.roleSet
                         val role: IRole = result.first()
 
-                        if(!availableRoles.contains(role)) {
+                        if (!availableRoles.contains(role)) {
 
                             MessageSender.sendMessage(channel, "Role ${role.name} is not a self assignable role")
 
@@ -95,6 +109,29 @@ class SelfRoleCommand : Command {
                     .joinToString("\n")
 
             builder.append(rolesStr)
+        }
+
+        MessageSender.sendMessage(channel, builder.toString())
+    }
+
+    private fun listUsers(channel: IChannel, role: IRole) {
+
+        val users: List<IUser> = channel.guild.getUsersByRole(role)
+        val builder = StringBuilder()
+
+        if (users.isEmpty()) {
+
+            builder.append("**No users found**")
+        } else {
+
+            builder.append("**Users for role ${role.name}:**\n\n")
+
+            val userStr = users.stream()
+                    .map { (it as IUser).name}
+                    .toList()
+                    .joinToString("\n")
+
+            builder.append(userStr)
         }
 
         MessageSender.sendMessage(channel, builder.toString())
