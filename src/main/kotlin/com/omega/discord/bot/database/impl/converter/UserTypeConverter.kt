@@ -13,7 +13,7 @@ class UserTypeConverter : TypeConverter(IUser::class.java, User::class.java), Si
     override fun decode(targetClass: Class<*>, fromDBObject: Any?, optionalExtraInfo: MappedField): Any? {
         return if (fromDBObject == null) {
             null
-        } else BotManager.client.getUserByID(fromDBObject as Long)
+        } else BotManager.client.fetchUser(fromDBObject as Long)
 
     }
 

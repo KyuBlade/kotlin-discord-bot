@@ -53,10 +53,7 @@ class NSFWCommand : Command() {
 
         val stringBuilder = StringBuilder("```\n")
 
-        val categoryCount = CATEGORIES.size
-
         CATEGORIES.forEach { stringBuilder.append(it).append('\n') }
-
         stringBuilder.append("```")
 
         MessageSender.sendMessage(channel, stringBuilder.toString())
