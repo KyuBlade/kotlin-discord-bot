@@ -5,7 +5,7 @@ import com.omega.discord.bot.permission.Permission
 import com.omega.discord.bot.property.GuildProperty
 import com.omega.discord.bot.property.GuildPropertyManager
 import com.omega.discord.bot.property.type.StringPropertyValue
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import sx.blah.discord.handle.obj.IChannel
 import sx.blah.discord.handle.obj.IMessage
 import sx.blah.discord.handle.obj.IUser

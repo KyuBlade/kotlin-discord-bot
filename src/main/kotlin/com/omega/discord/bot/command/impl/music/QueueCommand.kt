@@ -7,7 +7,7 @@ import com.omega.discord.bot.audio.loader.QueueUrlResultLoadHandler
 import com.omega.discord.bot.command.Command
 import com.omega.discord.bot.ext.StringUtils
 import com.omega.discord.bot.permission.Permission
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

@@ -1,6 +1,6 @@
 package com.omega.discord.bot.listener
 
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import sx.blah.discord.api.events.EventSubscriber
 import sx.blah.discord.handle.impl.events.guild.channel.message.MentionEvent
 

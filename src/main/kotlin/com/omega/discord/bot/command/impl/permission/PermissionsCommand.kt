@@ -4,7 +4,7 @@ import com.omega.discord.bot.command.Command
 import com.omega.discord.bot.ext.StringUtils
 import com.omega.discord.bot.ext.getNameAndDiscriminator
 import com.omega.discord.bot.permission.*
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import sx.blah.discord.handle.obj.IChannel
 import sx.blah.discord.handle.obj.IGuild
 import sx.blah.discord.handle.obj.IMessage

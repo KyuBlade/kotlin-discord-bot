@@ -1,4 +1,4 @@
-package com.omega.discord.bot.util
+package com.omega.discord.bot.service
 
 import sx.blah.discord.handle.obj.IChannel
 import sx.blah.discord.handle.obj.IMessage

@@ -11,6 +11,7 @@ import com.omega.discord.bot.command.impl.moderation.BanCommand
 import com.omega.discord.bot.command.impl.moderation.KickCommand
 import com.omega.discord.bot.command.impl.moderation.PurgeCommand
 import com.omega.discord.bot.command.impl.music.*
+import com.omega.discord.bot.command.impl.nsfw.NSFWCommand
 import com.omega.discord.bot.command.impl.permission.PermissionsCommand
 
 
@@ -36,6 +37,7 @@ object CommandRegistry {
         register(SelfRoleCommand())
         register(ManageSelfRoleCommand())
         register(RollCommand())
+        register(NSFWCommand())
     }
 
     fun register(command: Command) {

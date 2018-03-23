@@ -3,7 +3,7 @@ package com.omega.discord.bot.command.impl.common
 import com.omega.discord.bot.BotManager
 import com.omega.discord.bot.command.Command
 import com.omega.discord.bot.permission.Permission
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import sx.blah.discord.handle.obj.IChannel
 import sx.blah.discord.handle.obj.IMessage
 import sx.blah.discord.handle.obj.IUser

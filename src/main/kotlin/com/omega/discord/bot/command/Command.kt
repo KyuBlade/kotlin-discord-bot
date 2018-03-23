@@ -2,7 +2,7 @@ package com.omega.discord.bot.command
 
 import com.omega.discord.bot.BotManager
 import com.omega.discord.bot.permission.Permission
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import sx.blah.discord.handle.impl.obj.ReactionEmoji
 import sx.blah.discord.handle.obj.IChannel
 import sx.blah.discord.handle.obj.IMessage

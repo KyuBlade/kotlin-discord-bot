@@ -1,7 +1,7 @@
 package com.omega.discord.bot.audio.loader
 
 import com.omega.discord.bot.audio.GuildAudioPlayerManager
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack

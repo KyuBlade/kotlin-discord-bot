@@ -18,6 +18,7 @@ enum class Permission(val key: String) {
     COMMAND_AUTOROLE("command.autorole"),
     COMMAND_SELF_ROLE("command.role.self"),
     COMMAND_MANAGE_SELF_ROLE("command.role.self.manage"),
+    COMMAND_NSFW("command.nsfw"),
     COMMAND_ROLL("command.roll");
 
 

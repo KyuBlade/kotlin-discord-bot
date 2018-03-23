@@ -2,7 +2,7 @@ package com.omega.discord.bot.command.impl.music
 
 import com.omega.discord.bot.command.Command
 import com.omega.discord.bot.permission.Permission
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import sx.blah.discord.handle.obj.*
 import sx.blah.discord.util.PermissionUtils
 import sx.blah.discord.util.RequestBuffer

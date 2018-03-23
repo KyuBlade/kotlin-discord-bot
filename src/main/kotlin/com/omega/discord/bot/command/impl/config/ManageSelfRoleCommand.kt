@@ -5,7 +5,7 @@ import com.omega.discord.bot.permission.Permission
 import com.omega.discord.bot.property.GuildProperty
 import com.omega.discord.bot.property.GuildPropertyManager
 import com.omega.discord.bot.property.type.RoleSetPropertyValue
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import sx.blah.discord.handle.obj.*
 import java.util.stream.Collectors
 

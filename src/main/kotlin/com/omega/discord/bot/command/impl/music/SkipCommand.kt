@@ -6,7 +6,7 @@ import com.omega.discord.bot.audio.TrackUserData
 import com.omega.discord.bot.command.Command
 import com.omega.discord.bot.permission.Permission
 import com.omega.discord.bot.permission.PermissionManager
-import com.omega.discord.bot.util.MessageSender
+import com.omega.discord.bot.service.MessageSender
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import sx.blah.discord.handle.impl.obj.ReactionEmoji
 import sx.blah.discord.handle.obj.IChannel
