@@ -1,9 +1,6 @@
 package com.omega.discord.bot.command
 
-import com.omega.discord.bot.command.impl.common.HelpCommand
-import com.omega.discord.bot.command.impl.common.InviteCommand
-import com.omega.discord.bot.command.impl.common.RollCommand
-import com.omega.discord.bot.command.impl.common.SelfRoleCommand
+import com.omega.discord.bot.command.impl.common.*
 import com.omega.discord.bot.command.impl.config.AutoRoleCommand
 import com.omega.discord.bot.command.impl.config.ManageSelfRoleCommand
 import com.omega.discord.bot.command.impl.config.PrefixCommand
@@ -38,6 +35,7 @@ object CommandRegistry {
         register(ManageSelfRoleCommand())
         register(RollCommand())
         register(NSFWCommand())
+        register(SayCommand())
     }
 
     fun register(command: Command) {

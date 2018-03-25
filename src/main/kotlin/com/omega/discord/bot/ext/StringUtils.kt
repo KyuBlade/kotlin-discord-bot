@@ -1,6 +1,7 @@
 package com.omega.discord.bot.ext
 
 import com.omega.discord.bot.BotManager
+import sx.blah.discord.handle.obj.IChannel
 import sx.blah.discord.handle.obj.IRole
 import sx.blah.discord.handle.obj.IUser
 
@@ -10,6 +11,7 @@ class StringUtils {
 
         private val USER_MENTION_PATTERN: Regex = Regex("<@!?(\\d*)>")
         private val ROLE_MENTION_PATTERN: Regex = Regex("<@&+(\\d*)>")
+        private val CHANNEL_MENTION_PATTERN: Regex = Regex("<#+(\\d*)>")
 
         /**
          * Format timestamp to a string.
@@ -147,6 +149,35 @@ class StringUtils {
             return try {
                 val id: Long? = result?.groupValues?.get(1)?.toLong()
                 BotManager.client.getRoleByID(id!!)
+            } catch (e: NumberFormatException) {
+                println(e)
+                null
+            }
+        }
+
+        /**
+         * Check if the string is a channel mention
+         *
+         * @param mentionStr the string to test
+         * @return true if the string is a channel mention, false otherwise
+         */
+        fun isChannelMention(mentionStr: String): Boolean =
+                mentionStr.matches(CHANNEL_MENTION_PATTERN)
+
+        /**
+         * Parse a discord channel mention to a Channel object.
+         *
+         * @param mentionStr the mention string
+         * @return The channel object or null if not found
+         * @throws NumberFormatException if the mention string is malformed
+         */
+        fun parseChannelMention(mentionStr: String): IChannel? {
+
+            val result: MatchResult? = CHANNEL_MENTION_PATTERN.find(mentionStr)
+
+            return try {
+                val id: Long? = result?.groupValues?.get(1)?.toLong()
+                BotManager.client.getChannelByID(id!!)
             } catch (e: NumberFormatException) {
                 println(e)
                 null
