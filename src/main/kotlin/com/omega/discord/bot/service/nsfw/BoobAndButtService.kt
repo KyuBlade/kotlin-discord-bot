@@ -2,6 +2,7 @@ package com.omega.discord.bot.service.nsfw
 
 import okhttp3.*
 import org.json.JSONArray
+import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.io.IOException
 
@@ -21,9 +22,15 @@ object BoobAndButtService {
             .url("http://api.obutts.ru/butts/0/1/random")
             .build()
 
-    fun getRandomImage(imageType: ImageType, resultCallback: ResultCallback) {
+    fun getRandomImages(imageType: ImageType, count: Int, resultCallback: ResultCallback) {
 
-        val request = if (imageType == ImageType.BOOBS) boobRequest else buttRequest
+        val requestUrl = when (imageType) {
+            ImageType.BOOBS -> "http://api.oboobs.ru/boobs/0/$count/random"
+            ImageType.BUTTS -> "http://api.obutts.ru/butts/0/$count/random"
+        }
+        val request = Request.Builder()
+                .url(requestUrl)
+                .build()
 
         client.newCall(request).enqueue(object : Callback {
 
@@ -39,12 +46,25 @@ object BoobAndButtService {
                 val bodyData = response.body()!!.string()
                 val responseJSON = JSONArray(bodyData)
 
-                val imagePath = responseJSON.getJSONObject(0).getString("preview")
+                val results = mutableListOf<NSFWResult>()
+                responseJSON.forEach({
+                    val jsonObject = (it as JSONObject)
 
-                val baseUrl = if (imageType == ImageType.BOOBS) BOOBS_MEDIA_BASE_URL else BUTTS_MEDIA_BASE_URL
-                val imageUrl = "$baseUrl$imagePath"
+                    val modelName =
+                            if (jsonObject.isNull("model")) null
+                            else jsonObject.getString("model")
+                                    .let {
+                                        if (it.isBlank()) null else it
+                                    }
+                    val imagePath = jsonObject.getString("preview")
 
-                resultCallback.onResult(imageUrl)
+                    val baseUrl = if (imageType == ImageType.BOOBS) BOOBS_MEDIA_BASE_URL else BUTTS_MEDIA_BASE_URL
+                    val imageUrl = "$baseUrl$imagePath"
+
+                    results += NSFWResult(imageUrl, modelName)
+                })
+
+                resultCallback.onResult(results)
             }
         })
     }
@@ -58,6 +78,8 @@ object BoobAndButtService {
 
         fun onFailure(e: IOException)
 
-        fun onResult(imageUrl: String)
+        fun onResult(results: List<NSFWResult>)
     }
+
+    data class NSFWResult(val imageUrl: String, val modelName: String?)
 }

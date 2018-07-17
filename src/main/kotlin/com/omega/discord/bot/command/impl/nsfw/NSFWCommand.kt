@@ -12,12 +12,15 @@ import java.io.IOException
 
 class NSFWCommand : Command() {
 
+    private val maxCount = 5;
+
     override val name: String = "nsfw"
     override val aliases: Array<String>? = null
     override val usage: String =
             "**__NSFW Commands are only available in an NSFW channel__**\n\n" +
-            "**nsfw list** - Get list of available nsfw categories\n" +
-                    "**nsfw <categoryName>** - Get a random image for the provided category"
+                    "**nsfw list** - Get list of available nsfw categories\n" +
+                    "**nsfw <categoryName>** - Get a random image for the provided category\n" +
+                    "**nsfw <categoryName> <count>** - Get a defined number of random images for the provided category. The count parameter must be between 1 and $maxCount"
     override val allowPrivate: Boolean = false
     override val permission: Permission? = Permission.COMMAND_NSFW
     override val ownerOnly: Boolean = false
@@ -29,7 +32,7 @@ class NSFWCommand : Command() {
 
         message.delete()
 
-        if(!channel.isNSFW) {
+        if (!channel.isNSFW) {
 
             MessageSender.sendMessage(author, "Command unavailable outside of an NSFW channel")
 
@@ -39,12 +42,24 @@ class NSFWCommand : Command() {
 
         } else {
 
+            val count: Int =
+                    if (args.size <= 1) 1 // Return 1 if the parameter is not provided
+                    else
+                        try { // Return the parsed number
+                            args[1].toInt()
+                        } catch (e: NumberFormatException) { // Return 1 if the count parameter is not a number
+                            1
+                        }.let {
+                            // Check that the count is between the limits, return the closest limit otherwise
+                            if (it < 1) 1 else if (it > maxCount) maxCount else it
+                        }
+
             when (args.first()) {
 
                 "list" -> listCategories(channel)
                 "hentai" -> sendHentai(channel)
-                "boobs" -> sendBoobOrButt(channel, BoobAndButtService.ImageType.BOOBS)
-                "butts" -> sendBoobOrButt(channel, BoobAndButtService.ImageType.BUTTS)
+                "boobs" -> sendBoobOrButt(channel, BoobAndButtService.ImageType.BOOBS, count)
+                "butts" -> sendBoobOrButt(channel, BoobAndButtService.ImageType.BUTTS, count)
             }
         }
     }
@@ -63,18 +78,29 @@ class NSFWCommand : Command() {
 
     }
 
-    private fun sendBoobOrButt(channel: IChannel, imageType: BoobAndButtService.ImageType) {
+    private fun sendBoobOrButt(channel: IChannel, imageType: BoobAndButtService.ImageType, count: Int) {
 
-        BoobAndButtService.getRandomImage(imageType, object : BoobAndButtService.ResultCallback {
+        BoobAndButtService.getRandomImages(imageType, count, object : BoobAndButtService.ResultCallback {
 
             override fun onFailure(e: IOException) {
 
                 MessageSender.sendMessage(channel, "Request failed")
             }
 
-            override fun onResult(imageUrl: String) {
+            override fun onResult(results: List<BoobAndButtService.NSFWResult>) {
 
-                MessageSender.sendMessage(channel, imageUrl)
+                val stringBuilder = StringBuilder()
+
+                results.forEachIndexed({ i, result ->
+
+                    result.modelName?.let { stringBuilder.append("Model: ").append(it).append('\n') }
+                    stringBuilder.append(result.imageUrl)
+
+                    if (i < results.size - 1)
+                        stringBuilder.append("\n\n")
+                })
+
+                MessageSender.sendMessage(channel, stringBuilder.toString())
             }
         })
     }
