@@ -15,12 +15,6 @@ object BoobAndButtService {
     private const val BUTTS_MEDIA_BASE_URL = "http://media.obutts.ru/"
 
     private val client = OkHttpClient()
-    private val boobRequest = Request.Builder()
-            .url("http://api.oboobs.ru/boobs/0/1/random")
-            .build()
-    private val buttRequest = Request.Builder()
-            .url("http://api.obutts.ru/butts/0/1/random")
-            .build()
 
     fun getRandomImages(imageType: ImageType, count: Int, resultCallback: ResultCallback) {
 
@@ -47,7 +41,7 @@ object BoobAndButtService {
                 val responseJSON = JSONArray(bodyData)
 
                 val results = mutableListOf<NSFWResult>()
-                responseJSON.forEach({
+                responseJSON.forEach { it ->
                     val jsonObject = (it as JSONObject)
 
                     val modelName =
@@ -62,7 +56,7 @@ object BoobAndButtService {
                     val imageUrl = "$baseUrl$imagePath"
 
                     results += NSFWResult(imageUrl, modelName)
-                })
+                }
 
                 resultCallback.onResult(results)
             }

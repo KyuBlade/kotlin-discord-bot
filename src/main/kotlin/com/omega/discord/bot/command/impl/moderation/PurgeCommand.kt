@@ -8,6 +8,7 @@ import sx.blah.discord.handle.obj.IChannel
 import sx.blah.discord.handle.obj.IMessage
 import sx.blah.discord.handle.obj.IUser
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 
 class PurgeCommand : Command() {
@@ -96,7 +97,7 @@ class PurgeCommand : Command() {
                 }
 
                 var date = LocalDateTime.now()
-                var day: Int = 0
+                var day = 0
                 val messages: MutableList<IMessage> = mutableListOf()
 
                 do {
@@ -104,7 +105,7 @@ class PurgeCommand : Command() {
                     day++
 
                     println("Get messages from $day days ago")
-                    messages.addAll(channel.getMessageHistoryTo(date)
+                    messages.addAll(channel.getMessageHistoryTo(date.toInstant(ZoneOffset.ofHours(2)))
                             .filter { it.author == user })
                     println("Now got ${messages.size} messages")
 
