@@ -2,7 +2,7 @@ group 'com.omega'
 version '0.1.0'
 
 buildscript {
-    ext.kotlin_version = '1.2.41'
+    ext.kotlin_version = '1.2.60'
 
     repositories {
         jcenter()
@@ -35,7 +35,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile 'com.github.austinv11:Discord4j:1c72e44324'
+    compile 'com.github.austinv11:Discord4j:2.10.1'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile 'com.sedmelluq:lavaplayer:1.3.7'
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
